@@ -1,6 +1,7 @@
 import { createSignal, Index } from "solid-js";
+import { CopyPayloadSection } from "./CopyPayloadSection";
 
-const clipboardDataTypes = [
+const CLIPBOARD_DATA_TYPES = [
   "text/plain",
   "text/uri-list",
   "text/csv",
@@ -26,7 +27,7 @@ export default function CopyPaster() {
 
   window.addEventListener("paste", (event) => {
     const newCopyPayload: CopyPayload = {};
-    clipboardDataTypes.forEach((type) => {
+    CLIPBOARD_DATA_TYPES.forEach((type) => {
       const paste = (event as ClipboardEvent).clipboardData?.getData(type);
       if (paste) {
         newCopyPayload[type] = paste;
@@ -52,13 +53,12 @@ export default function CopyPaster() {
   return (
     <div class="flex flex-col">
       <button onClick={copy}>Copy</button>
-
       <div>
         <Index each={Object.keys(copyPayload())}>
           {(key, i) => {
             const section = copyPayload()[key()];
             return (
-              <PayloadSection
+              <CopyPayloadSection
                 type={key()}
                 content={section}
                 onContentChange={(newContent) => {
@@ -69,31 +69,6 @@ export default function CopyPaster() {
           }}
         </Index>
       </div>
-    </div>
-  );
-}
-
-function PayloadSection({
-  type,
-  content,
-  onContentChange,
-}: {
-  type: string;
-  content: string;
-  onContentChange: (content: string) => void;
-}) {
-  return (
-    <div>
-      <h5>{type}</h5>
-      <textarea
-        onChange={(e) => onContentChange(e.currentTarget.value)}
-        name={type}
-        id=""
-        cols="30"
-        rows="10"
-      >
-        {content}
-      </textarea>
     </div>
   );
 }
