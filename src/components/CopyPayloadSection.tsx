@@ -11,6 +11,7 @@ export function CopyPayloadSection({
     <div>
       <h5>{type}</h5>
       <textarea
+        class="text-gray-900"
         onChange={(e) => onContentChange(e.currentTarget.value)}
         name={type}
         id=""

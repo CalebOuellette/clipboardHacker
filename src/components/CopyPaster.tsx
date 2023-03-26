@@ -19,27 +19,27 @@ const CLIPBOARD_DATA_TYPES = [
 ];
 
 type CopyPayload = {
-  [type: string]: string;
+  type: string;
+  content: string;
 };
 
 export default function CopyPaster() {
-  const [copyPayload, setCopyPayload] = createSignal<CopyPayload>({});
+  const [copyPayload, setCopyPayload] = createSignal<CopyPayload[]>([]);
 
   window.addEventListener("paste", (event) => {
-    const newCopyPayload: CopyPayload = {};
+    const newCopyPayload: CopyPayload[] = [];
     CLIPBOARD_DATA_TYPES.forEach((type) => {
       const paste = (event as ClipboardEvent).clipboardData?.getData(type);
       if (paste) {
-        newCopyPayload[type] = paste;
+        newCopyPayload.push({ type, content: paste });
       }
     });
     setCopyPayload(newCopyPayload);
   });
 
   function copyHandler(event: ClipboardEvent) {
-    const values = copyPayload();
-    Object.keys(values).forEach((key) => {
-      event.clipboardData?.setData(key, values[key]);
+    copyPayload().forEach((item) => {
+      event.clipboardData?.setData(item.type, item.content);
     });
     event.preventDefault();
   }
@@ -52,17 +52,28 @@ export default function CopyPaster() {
 
   return (
     <div class="flex flex-col">
-      <button onClick={copy}>Copy</button>
       <div>
-        <Index each={Object.keys(copyPayload())}>
-          {(key, i) => {
-            const section = copyPayload()[key()];
+        <button
+          onClick={copy}
+          class="flex flex-col justify-center pt-3 pr-8 pb-3 pl-8 bg-blue-200"
+        >
+          Copy
+        </button>
+      </div>
+      <div>
+        <Index each={copyPayload()}>
+          {(item, i) => {
             return (
               <CopyPayloadSection
-                type={key()}
-                content={section}
+                type={item().type}
+                content={item().content}
                 onContentChange={(newContent) => {
-                  setCopyPayload({ [key()]: newContent });
+                  const existingItem = copyPayload().find(
+                    (entry) => entry.type === item().type
+                  );
+                  if (!existingItem) return;
+                  existingItem.content = newContent;
+                  setCopyPayload([...copyPayload()]);
                 }}
               />
             );
