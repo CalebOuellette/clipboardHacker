@@ -25,8 +25,11 @@ type CopyPayload = {
 
 export default function CopyPaster() {
   const [copyPayload, setCopyPayload] = createSignal<CopyPayload[]>([]);
+  const [enableInterceptors, setEnableInterceptors] =
+    createSignal<boolean>(true);
 
   window.addEventListener("paste", (event) => {
+    if (enableInterceptors() === false) return;
     const newCopyPayload: CopyPayload[] = [];
     CLIPBOARD_DATA_TYPES.forEach((type) => {
       const paste = (event as ClipboardEvent).clipboardData?.getData(type);
@@ -38,6 +41,7 @@ export default function CopyPaster() {
   });
 
   function copyHandler(event: ClipboardEvent) {
+    if (enableInterceptors() === false) return;
     copyPayload().forEach((item) => {
       event.clipboardData?.setData(item.type, item.content);
     });
@@ -58,6 +62,12 @@ export default function CopyPaster() {
           class="flex flex-col justify-center pt-3 pr-8 pb-3 pl-8 bg-blue-200"
         >
           Copy
+        </button>
+        <button
+          onClick={() => setEnableInterceptors(!enableInterceptors())}
+          class="flex flex-col justify-center pt-3 pr-8 pb-3 pl-8 bg-blue-200"
+        >
+          Interceptor {enableInterceptors() ? "On" : "Off"}
         </button>
       </div>
       <div>
