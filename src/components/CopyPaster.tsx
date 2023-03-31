@@ -18,7 +18,7 @@ const CLIPBOARD_DATA_TYPES = [
   "application/octet-stream",
 ];
 
-type CopyPayload = {
+export type CopyPayload = {
   type: string;
   content: string;
 };
@@ -49,7 +49,9 @@ export default function CopyPaster() {
   }
 
   const copy = () => {
+    setEnableInterceptors(true);
     document.execCommand("copy");
+    setEnableInterceptors(false);
   };
 
   document.addEventListener("copy", copyHandler, true);
@@ -72,11 +74,13 @@ export default function CopyPaster() {
       </div>
       <div>
         <Index each={copyPayload()}>
-          {(item, i) => {
+          {(item, index) => {
             return (
               <CopyPayloadSection
-                type={item().type}
-                content={item().content}
+                data-index={index}
+                item={item}
+                onFocus={() => setEnableInterceptors(false)}
+                onBlur={() => setEnableInterceptors(true)}
                 onContentChange={(newContent) => {
                   const existingItem = copyPayload().find(
                     (entry) => entry.type === item().type
