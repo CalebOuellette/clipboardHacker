@@ -1,0 +1,16 @@
+export const CLIPBOARD_DATA_TYPES = [
+  "text/plain",
+  "text/uri-list",
+  "text/csv",
+  "text/css",
+  "text/html",
+  "application/xhtml+xml",
+  "image/png",
+  "image/jpg, image/jpeg",
+  "image/gif",
+  "image/svg+xml",
+  "application/xml, text/xml",
+  "application/javascript",
+  "application/json",
+  "application/octet-stream",
+];
