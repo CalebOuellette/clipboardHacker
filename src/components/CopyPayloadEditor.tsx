@@ -1,22 +1,5 @@
-import { createSignal, Index } from "solid-js";
+import { Index } from "solid-js";
 import { CopyPayloadSection } from "./CopyPayloadSection";
-
-const CLIPBOARD_DATA_TYPES = [
-  "text/plain",
-  "text/uri-list",
-  "text/csv",
-  "text/css",
-  "text/html",
-  "application/xhtml+xml",
-  "image/png",
-  "image/jpg, image/jpeg",
-  "image/gif",
-  "image/svg+xml",
-  "application/xml, text/xml",
-  "application/javascript",
-  "application/json",
-  "application/octet-stream",
-];
 
 export type CopyPayload = {
   type: string;
@@ -40,12 +23,17 @@ export default function CopyPayloadEditor({
                 data-index={index}
                 item={item}
                 onContentChange={(newContent) => {
-                  const existingItem = copyPayload().find(
+                  const oldPayload = copyPayload();
+                  const i = oldPayload.findIndex(
                     (entry) => entry.type === item().type
                   );
-                  if (!existingItem) return;
-                  existingItem.content = newContent;
-                  setCopyPayload([...copyPayload()]);
+                  if (i === -1) return;
+                  const oldContent = oldPayload[i];
+                  oldPayload[i] = {
+                    content: newContent,
+                    type: oldContent.type,
+                  };
+                  setCopyPayload([...oldPayload]);
                 }}
               />
             );

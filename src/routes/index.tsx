@@ -1,6 +1,6 @@
 import { createSignal, createEffect } from "solid-js";
 import CopyPayloadEditor from "~/components/CopyPayloadEditor";
-import { CLIPBOARD_DATA_TYPES } from "../lib/ClipboardTypes";
+import { CLIPBOARD_DATA_TYPES, formatText } from "../lib/ClipboardTypeUtils";
 
 export type CopyPayload = {
   type: string;
@@ -16,7 +16,7 @@ export default function Home() {
     CLIPBOARD_DATA_TYPES.forEach((type) => {
       const paste = event.clipboardData?.getData(type);
       if (paste) {
-        newCopyPayload.push({ type, content: paste });
+        newCopyPayload.push({ type, content: formatText(paste, type) });
       }
     });
     setCopyPayload(newCopyPayload);
@@ -50,7 +50,7 @@ export default function Home() {
   };
 
   return (
-    <main class="text-slate-50 p-3 bg-gray-600 h-screen">
+    <main class="text-slate-50 p-3 bg-neutral-900 min-h-screen">
       <div class="box-border ml-1 self-stretch flex flex-row justify-between">
         <div class="self-start flex flex-col justify-start box-border">
           <div class="whitespace-nowrap text-3xl font-['Inter'] font-bold text-[#ffffff] box-border self-start">
