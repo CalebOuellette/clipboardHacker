@@ -15,9 +15,10 @@ export function CopyPayloadSection({
 
   return (
     <div>
-      <h5>{item().type}</h5>
+      <div class="text-xl capitalize font-medium">{item().type}</div>
       <textarea
-        class="text-gray-900 w-full"
+        class="text-white w-full bg-transparent border border-white rounded p-2"
+        placeholder={`Start typing you ${item().type} here...`}
         onChange={(e) => onContentChange(e.currentTarget.value)}
         name={item().type}
         onBlur={attemptFormat}

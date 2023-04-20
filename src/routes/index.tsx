@@ -11,6 +11,8 @@ export default function Home() {
   const [startScreen, setStartScreen] = createSignal<boolean>(true);
   const [copyPayload, setCopyPayload] = createSignal<CopyPayload[]>([]);
 
+  const [copying, setCopying] = createSignal<boolean>(false);
+
   function onPasteEvent(event: ClipboardEvent) {
     const newCopyPayload: CopyPayload[] = [];
     CLIPBOARD_DATA_TYPES.forEach((type) => {
@@ -39,6 +41,8 @@ export default function Home() {
   }
 
   const copy = () => {
+    setCopying(true);
+    setTimeout(() => setCopying(false), 1500);
     document.addEventListener("copy", onCopyEvent, true);
     document.execCommand("copy");
     document.removeEventListener("copy", onCopyEvent, true);
@@ -49,14 +53,19 @@ export default function Home() {
     setCopyPayload([]);
   };
 
+  const appJsonStart = () => {
+    setStartScreen(false);
+    setCopyPayload([]);
+  };
+
   return (
-    <main class="text-slate-50 p-3 bg-neutral-900 min-h-screen">
+    <main class="text-slate-50 p-7 bg-neutral-900 min-h-screen">
       <div class="box-border ml-1 self-stretch flex flex-row justify-between">
         <div class="self-start flex flex-col justify-start box-border">
           <div class="whitespace-nowrap text-3xl font-['Inter'] font-bold text-[#ffffff] box-border self-start">
             Clipboard Hacker
           </div>
-          <div class="whitespace-nowrap font-['Inter'] font-normal text-[#ffffff] box-border self-start">
+          <div class="whitespace-nowrap font-['Inter'] font-thin text-[#ffffff] box-border self-start">
             A utility for interacting with the clipboard.
           </div>
         </div>
@@ -64,22 +73,29 @@ export default function Home() {
           <div class="box-border self-start flex flex-row justify-start gap-4">
             <button
               onClick={reset}
-              class="border-solid border-t-default font-['Inter'] font-bold text-[#ffffff] border-r-default border-b-default border-l-default border-[#ffffff]  box-border pt-3 pb-3 pl-6 pr-6 self-start flex flex-col justify-center"
+              class="border-solid rounded hover:bg-neutral-700 border-t-default font-['Inter'] font-bold text-[#ffffff] border-r-default border-b-default border-l-default border-[#ffffff] box-border pt-3 pb-3 pl-6 pr-6 self-start flex flex-col justify-center"
             >
               Reset
             </button>
             <button
               onClick={copy}
-              class="text-[#ffffff] font-bold font-['Inter'] bg-[#68b2f6] box-border pt-3 pb-3 pl-8 pr-8 self-start flex flex-col justify-center"
+              class="text-white font-bold font-['Inter'] rounded bg-blue-500 hover:bg-blue-400 box-border pt-3 pb-3 pl-8 pr-8 self-start flex flex-col justify-center"
             >
-              Copy
+              {copying() ? "Copied!" : "Copy"}
             </button>
           </div>
         )}
       </div>
       {startScreen() ? (
-        <div class="mt-[50vh] font-['Open Sans'] text-center font-bold text-[#ffffff]">
-          Press Cmd + V to get started.
+        <div class="mt-[40vh] flex gap-2 flex-col items-center font-['Open Sans'] text-center font-bold text-[#ffffff]">
+          <div>Press Cmd + V to get started.</div>
+          <div>or</div>
+          <button
+            onClick={appJsonStart}
+            class="bg-blue-500 hover:bg-blue-400 pt-3 pb-3 pl-8 pr-8 rounded"
+          >
+            Start with empty
+          </button>
         </div>
       ) : (
         <CopyPayloadEditor
