@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   return (
-    <main class="text-slate-50 p-7 bg-neutral-900 min-h-screen ce">
+    <main class="text-slate-50 p-7 bg-neutral-900 min-h-screen">
       <div class="box-border ml-1 self-stretch flex flex-row justify-between">
         <div class="self-start flex flex-col justify-start box-border">
           <div class="whitespace-nowrap text-3xl font-['Inter'] font-bold text-[#ffffff] box-border self-start">
