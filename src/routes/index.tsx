@@ -1,6 +1,7 @@
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createEffect, createMemo } from "solid-js";
 import CopyPayloadEditor from "~/components/CopyPayloadEditor";
 import { CLIPBOARD_DATA_TYPES, formatText } from "../lib/ClipboardTypeUtils";
+import AddSection from "~/components/AddSection";
 
 export type CopyPayload = {
   type: string;
@@ -8,8 +9,8 @@ export type CopyPayload = {
 };
 
 export default function Home() {
-  const [startScreen, setStartScreen] = createSignal<boolean>(true);
   const [copyPayload, setCopyPayload] = createSignal<CopyPayload[]>([]);
+  const startScreen = createMemo(() => copyPayload().length === 0);
 
   const [copying, setCopying] = createSignal<boolean>(false);
 
@@ -22,7 +23,6 @@ export default function Home() {
       }
     });
     setCopyPayload(newCopyPayload);
-    setStartScreen(false);
   }
 
   createEffect(() => {
@@ -49,17 +49,11 @@ export default function Home() {
   };
 
   const reset = () => {
-    setStartScreen(true);
-    setCopyPayload([]);
-  };
-
-  const appJsonStart = () => {
-    setStartScreen(false);
     setCopyPayload([]);
   };
 
   return (
-    <main class="text-slate-50 p-7 bg-neutral-900 min-h-screen">
+    <main class="text-slate-50 p-7 bg-neutral-900 min-h-screen ce">
       <div class="box-border ml-1 self-stretch flex flex-row justify-between">
         <div class="self-start flex flex-col justify-start box-border">
           <div class="whitespace-nowrap text-3xl font-['Inter'] font-bold text-[#ffffff] box-border self-start">
@@ -87,15 +81,10 @@ export default function Home() {
         )}
       </div>
       {startScreen() ? (
-        <div class="mt-[40vh] flex gap-2 flex-col items-center font-['Open Sans'] text-center font-bold text-[#ffffff]">
-          <div>Press Cmd + V to get started.</div>
-          <div>or</div>
-          <button
-            onClick={appJsonStart}
-            class="bg-blue-500 hover:bg-blue-400 pt-3 pb-3 pl-8 pr-8 rounded"
-          >
-            Start with empty
-          </button>
+        <div class="mt-[30vh] flex gap-1 flex-col items-center font-['Open Sans'] text-center font-bold text-[#ffffff]">
+          <div class="text-xl">Press Cmd + V to get started</div>
+          <div class="text-neutral-400 font-thin">or</div>
+          <div class="font-normal">Start with an empty section</div>
         </div>
       ) : (
         <CopyPayloadEditor
@@ -103,6 +92,14 @@ export default function Home() {
           setCopyPayload={setCopyPayload}
         />
       )}
+      <div class="flex justify-center pt-2">
+        <div class="w-8/12">
+          <AddSection
+            copyPayload={copyPayload}
+            setCopyPayload={setCopyPayload}
+          />
+        </div>
+      </div>
     </main>
   );
 }
