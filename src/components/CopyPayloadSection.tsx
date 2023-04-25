@@ -21,7 +21,6 @@ export function CopyPayloadSection({
         placeholder={`Start typing you ${item().type} here...`}
         onChange={(e) => onContentChange(e.currentTarget.value)}
         name={item().type}
-        onBlur={attemptFormat}
         id=""
         rows={25}
         cols={80}

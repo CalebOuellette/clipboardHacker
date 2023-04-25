@@ -10,6 +10,7 @@ export type CopyPayload = {
 
 export default function Home() {
   const [copyPayload, setCopyPayload] = createSignal<CopyPayload[]>([]);
+  const [formatters, setFormatters] = createSignal<boolean>(false);
   const startScreen = createMemo(() => copyPayload().length === 0);
 
   const [copying, setCopying] = createSignal<boolean>(false);
@@ -19,7 +20,10 @@ export default function Home() {
     CLIPBOARD_DATA_TYPES.forEach((type) => {
       const paste = event.clipboardData?.getData(type);
       if (paste) {
-        newCopyPayload.push({ type, content: formatText(paste, type) });
+        newCopyPayload.push({
+          type,
+          content: formatters() ? formatText(paste, type) : paste,
+        });
       }
     });
     setCopyPayload(newCopyPayload);
@@ -62,6 +66,12 @@ export default function Home() {
           <div class="whitespace-nowrap font-['Inter'] font-thin text-[#ffffff] box-border self-start">
             A utility for interacting with the clipboard.
           </div>
+          <button
+            onClick={() => setFormatters(!formatters())}
+            class="border-solid rounded hover:bg-neutral-700 border-t-default font-['Inter'] font-bold text-[#ffffff] border-r-default border-b-default border-l-default border-[#ffffff] box-border pt-3 pb-3 pl-6 pr-6 self-start flex flex-col justify-center"
+          >
+            turn {formatters() ? "on" : "off"} formatters
+          </button>
         </div>
         {!startScreen() && (
           <div class="box-border self-start flex flex-row justify-start gap-4">
