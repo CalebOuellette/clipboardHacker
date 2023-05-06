@@ -1,4 +1,5 @@
 import { CLIPBOARD_DATA_TYPES } from "../lib/ClipboardTypeUtils";
+import {Dropdown} from './Dropdown';
 
 export type CopyPayload = {
   type: string;
@@ -14,6 +15,7 @@ export default function AddSection({
 }) {
   return (
     <div>
+      <Dropdown />
       <div class="gap-3 flex flex-wrap justify-center">
         {CLIPBOARD_DATA_TYPES.filter(
           (type) =>

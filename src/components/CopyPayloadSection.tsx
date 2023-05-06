@@ -16,6 +16,7 @@ export function CopyPayloadSection({
   return (
     <div>
       <div class="text-xl capitalize font-medium">{item().type}</div>
+      
       <textarea
         class="text-white w-full bg-transparent border border-white rounded p-2"
         placeholder={`Start typing you ${item().type} here...`}
