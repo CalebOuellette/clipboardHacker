@@ -42,7 +42,7 @@ export default function AddSection({
   };
 
   return (
-    <div class="absolute">
+    <div class="fixed left-1/2 transform translate-x-[-50%] bottom-2">
       <Dropdown
         openUp
         icon={PlusIcon}
