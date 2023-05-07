@@ -22,16 +22,11 @@ export default function CopyPayloadEditor({
               <CopyPayloadSection
                 data-index={index}
                 item={item}
-                onContentChange={(newContent) => {
+                onChange={(newContent, type) => {
                   const oldPayload = copyPayload();
-                  const i = oldPayload.findIndex(
-                    (entry) => entry.type === item().type
-                  );
-                  if (i === -1) return;
-                  const oldContent = oldPayload[i];
-                  oldPayload[i] = {
+                  oldPayload[index] = {
                     content: newContent,
-                    type: oldContent.type,
+                    type: type,
                   };
                   setCopyPayload([...oldPayload]);
                 }}
