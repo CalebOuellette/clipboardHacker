@@ -1,4 +1,4 @@
-import { Accessor, For, Index } from "solid-js";
+import { For } from "solid-js";
 import { CopyPayloadSection } from "./CopyPayloadSection";
 
 export type CopyPayload = {

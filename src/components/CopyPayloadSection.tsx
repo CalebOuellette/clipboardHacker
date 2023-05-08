@@ -38,17 +38,17 @@ export function CopyPayloadSection(props: {
             option.value === props.item.type
           )!}
         />
-        {FORMATTERS[props.item.type] && (
-          <FormatButton
-            onClick={attemptFormat}
-          />
-        )}
+        <FormatButton
+          onClick={attemptFormat}
+        />
         <DeleteButton onClick={props.deleteItem} />
       </div>
       <textarea
         class="text-white mt-2 w-full bg-neutral-800 rounded p-2"
         placeholder={`Start typing you ${props.item.type} here...`}
-        onChange={(e) => props.onChange(e.currentTarget.value, props.item.type)}
+        onChange={(e) => {
+          props.onChange(e.currentTarget.value, props.item.type);
+        }}
         name={props.item.type}
         id=""
         rows={25}

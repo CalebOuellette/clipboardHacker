@@ -5,7 +5,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "solid-headless";
-import { Accessor, Component, For, JSX } from "solid-js";
+import { Component, For, JSX } from "solid-js";
 import classNames from "classNames";
 
 const dropDownIcon = () => (
@@ -65,9 +65,9 @@ export const Dropdown: Component<{
                         <div
                           class={classNames(
                             isActive()
-                              ? "text-amber-900 bg-amber-100"
+                              ? "text-blue-900 bg-blue-100"
                               : "text-gray-900",
-                            "group-hover:text-amber-900 group-hover:bg-amber-100",
+                            "group-hover:text-blue-900 group-hover:bg-blue-100",
                             "cursor-default select-none relative py-2 pl-10 pr-4",
                           )}
                         >
@@ -79,21 +79,6 @@ export const Dropdown: Component<{
                           >
                             {option.name}
                           </span>
-                          {isSelected()
-                            ? (
-                              <span
-                                class={classNames(
-                                  isActive()
-                                    ? "text-amber-600"
-                                    : "text-amber-600",
-                                  "group-hover:text-amber-600",
-                                  "absolute inset-y-0 left-0 flex items-center pl-3",
-                                )}
-                              >
-                                check
-                              </span>
-                            )
-                            : null}
                         </div>
                       )}
                     </ListboxOption>
