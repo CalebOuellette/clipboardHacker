@@ -15,16 +15,16 @@ export const CLIPBOARD_DATA_TYPES = [
   "application/octet-stream",
 ];
 
-export const formatters: { [key: string]: (content: string) => string } = {
+export const FORMATTERS: { [key: string]: (content: string) => string } = {
   "application/json": (content: string) => {
     return JSON.stringify(JSON.parse(content), null, 2);
   },
 };
 
 export const formatText = (content: string, type: string) => {
-  if (!formatters[type]) return content;
+  if (!FORMATTERS[type]) return content;
   try {
-    return formatters[type](content);
+    return FORMATTERS[type](content);
   } catch (e) {
     console.warn(e);
     return content;

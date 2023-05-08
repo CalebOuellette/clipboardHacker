@@ -1,6 +1,6 @@
-import { createSignal, createEffect, createMemo } from "solid-js";
+import { createEffect, createMemo, createSignal } from "solid-js";
 import CopyPayloadEditor from "~/components/CopyPayloadEditor";
-import { CLIPBOARD_DATA_TYPES} from "../lib/ClipboardTypeUtils";
+import { CLIPBOARD_DATA_TYPES } from "../lib/ClipboardTypeUtils";
 import AddSection from "~/components/AddSection";
 
 export type CopyPayload = {
@@ -65,7 +65,7 @@ export default function Home() {
           <div class="whitespace-nowrap font-['Inter'] font-thin text-[#ffffff] box-border self-start">
             A utility for interacting with the clipboard.
           </div>
-       </div>
+        </div>
         {!startScreen() && (
           <div class="box-border self-start flex flex-row justify-start gap-4">
             <button
@@ -83,18 +83,18 @@ export default function Home() {
           </div>
         )}
       </div>
-      {startScreen() ? (
-        <div class="mt-[30vh] flex gap-1 flex-col items-center font-['Open Sans'] text-center font-bold text-[#ffffff]">
-          <div class="text-xl">Press Cmd + V to get started</div>
-          <div class="text-neutral-400 font-thin">or</div>
-          <div class="font-normal">Start with an empty section</div>
-        </div>
-      ) : (
-        <CopyPayloadEditor
-          copyPayload={copyPayload}
-          setCopyPayload={setCopyPayload}
-        />
-      )}
+      {startScreen()
+        ? (
+          <div class="mt-[30vh] flex gap-1 flex-col items-center font-['Open Sans'] text-center font-bold text-[#ffffff]">
+            <div class="text-xl">Press Cmd + V to get started</div>
+          </div>
+        )
+        : (
+          <CopyPayloadEditor
+            copyPayload={copyPayload()}
+            setCopyPayload={setCopyPayload}
+          />
+        )}
       <div class="flex justify-center pt-2">
         <div class="w-8/12">
           <AddSection
