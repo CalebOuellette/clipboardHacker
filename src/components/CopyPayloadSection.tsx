@@ -13,6 +13,7 @@ const TypeOptions = CLIPBOARD_DATA_TYPES.map((type) => ({
 export function CopyPayloadSection(props: {
   deleteItem: () => void;
   item: CopyPayload;
+  content: string;
   onChange: (content: string, type: string) => void;
 }) {
   const attemptFormat = () => {
@@ -45,16 +46,17 @@ export function CopyPayloadSection(props: {
       <textarea
         class="text-white mt-2 w-full bg-neutral-800 rounded p-2"
         placeholder={`Start typing you ${props.item.type} here...`}
-        onChange={(e) => {
+        onInput={(e) => {
           props.onChange(e.currentTarget.value, props.item.type);
         }}
         name={props.item.type}
         id=""
         rows={25}
         cols={80}
+        value={props.content}
       >
-        {props.item.content}
       </textarea>
+      <pre>{props.content}</pre>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { Component } from "solid-js";
 import { CLIPBOARD_DATA_TYPES } from "../lib/ClipboardTypeUtils";
 import { Dropdown } from "./Dropdown";
 
@@ -26,18 +27,18 @@ const SectionOptions = CLIPBOARD_DATA_TYPES.map((type) => ({
   value: type,
 }));
 
-export default function AddSection({
-  copyPayload,
-  setCopyPayload,
-}: {
-  copyPayload: () => CopyPayload[];
+export const AddSection: Component<{
+  copyPayload: CopyPayload[];
   setCopyPayload: (newCopyPayload: CopyPayload[]) => void;
-}) {
+}> = (props) => {
   const addSection = (option: { name: string; value: string }) => {
-    const oldPayload = copyPayload();
+    const oldPayload = props.copyPayload;
     const i = oldPayload.findIndex((entry) => entry.type === option.value);
     if (i === -1) {
-      setCopyPayload([...oldPayload, { type: option.value, content: "" }]);
+      props.setCopyPayload([...oldPayload, {
+        type: option.value,
+        content: "",
+      }]);
     }
   };
 
@@ -52,4 +53,4 @@ export default function AddSection({
       />
     </div>
   );
-}
+};

@@ -1,4 +1,5 @@
 import { For } from "solid-js";
+import type { SetStoreFunction, Store, StoreNode } from "solid-js/store";
 import { CopyPayloadSection } from "./CopyPayloadSection";
 
 export type CopyPayload = {
@@ -8,7 +9,7 @@ export type CopyPayload = {
 
 export default function CopyPayloadEditor(props: {
   copyPayload: CopyPayload[];
-  setCopyPayload: (newCopyPayload: CopyPayload[]) => void;
+  setCopyPayload: SetStoreFunction<CopyPayload[]>;
 }) {
   return (
     <div class="flex flex-col pt-3">
@@ -20,18 +21,16 @@ export default function CopyPayloadEditor(props: {
               <CopyPayloadSection
                 data-index={index}
                 item={item}
+                content={item.content}
                 deleteItem={() => {
                   const oldPayload = props.copyPayload;
                   oldPayload.splice(index(), 1);
                   props.setCopyPayload([...oldPayload]);
                 }}
                 onChange={(newContent, type) => {
-                  const oldPayload = props.copyPayload;
-                  oldPayload[index()] = {
-                    content: newContent,
-                    type: type,
-                  };
-                  props.setCopyPayload([...oldPayload]);
+                  console.log("setting...");
+                  props.setCopyPayload(index(), "content", newContent);
+                  props.setCopyPayload(index(), "type", type);
                 }}
               />
             );

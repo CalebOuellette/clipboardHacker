@@ -1,7 +1,8 @@
 import { createEffect, createMemo, createSignal } from "solid-js";
+import { createStore } from "solid-js/store";
 import CopyPayloadEditor from "~/components/CopyPayloadEditor";
 import { CLIPBOARD_DATA_TYPES } from "../lib/ClipboardTypeUtils";
-import AddSection from "~/components/AddSection";
+import { AddSection } from "~/components/AddSection";
 
 export type CopyPayload = {
   type: string;
@@ -9,8 +10,8 @@ export type CopyPayload = {
 };
 
 export default function Home() {
-  const [copyPayload, setCopyPayload] = createSignal<CopyPayload[]>([]);
-  const startScreen = createMemo(() => copyPayload().length === 0);
+  const [copyPayload, setCopyPayload] = createStore<CopyPayload[]>([]);
+  const startScreen = createMemo(() => copyPayload.length === 0);
 
   const [copying, setCopying] = createSignal<boolean>(false);
 
@@ -37,7 +38,7 @@ export default function Home() {
   });
 
   function onCopyEvent(event: ClipboardEvent) {
-    copyPayload().forEach((item) => {
+    copyPayload.forEach((item) => {
       event.clipboardData?.setData(item.type, item.content);
     });
     event.preventDefault();
@@ -91,7 +92,7 @@ export default function Home() {
         )
         : (
           <CopyPayloadEditor
-            copyPayload={copyPayload()}
+            copyPayload={copyPayload}
             setCopyPayload={setCopyPayload}
           />
         )}
