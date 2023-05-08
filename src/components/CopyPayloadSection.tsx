@@ -1,6 +1,5 @@
-import { Accessor } from "solid-js";
 import { CopyPayload } from "./CopyPayloadEditor";
-import { FORMATTERS, formatText } from "../lib/ClipboardTypeUtils";
+import { formatText } from "../lib/ClipboardTypeUtils";
 import { Dropdown, DropDownOption } from "./Dropdown";
 import { CLIPBOARD_DATA_TYPES } from "../lib/ClipboardTypeUtils";
 import { DeleteButton, FormatButton } from "./IconButton";
