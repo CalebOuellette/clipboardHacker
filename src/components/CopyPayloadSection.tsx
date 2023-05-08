@@ -56,7 +56,6 @@ export function CopyPayloadSection(props: {
         value={props.content}
       >
       </textarea>
-      <pre>{props.content}</pre>
     </div>
   );
 }
