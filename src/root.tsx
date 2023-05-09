@@ -1,8 +1,6 @@
 // @refresh reload
 import { Suspense } from "solid-js";
 import {
-  useLocation,
-  A,
   Body,
   ErrorBoundary,
   FileRoutes,
@@ -25,7 +23,7 @@ export default function Root() {
       </Head>
       <Body>
         <Suspense>
-          <ErrorBoundary>  
+          <ErrorBoundary>
             <Routes>
               <FileRoutes />
             </Routes>
