@@ -10,8 +10,10 @@ export type CopyPayload = {
 };
 
 export default function Home() {
-  const [copyPayload, setCopyPayload] = createStore<CopyPayload[]>([]);
-  const startScreen = createMemo(() => copyPayload.length === 0);
+  const [copyPayload, setCopyPayload] = createStore<{ items: CopyPayload[] }>(
+    { items: [] },
+  );
+  const startScreen = createMemo(() => copyPayload.items.length === 0);
 
   const [copying, setCopying] = createSignal<boolean>(false);
 
@@ -26,7 +28,7 @@ export default function Home() {
         });
       }
     });
-    setCopyPayload(newCopyPayload);
+    setCopyPayload({ items: newCopyPayload });
   }
 
   createEffect(() => {
@@ -38,7 +40,7 @@ export default function Home() {
   });
 
   function onCopyEvent(event: ClipboardEvent) {
-    copyPayload.forEach((item) => {
+    copyPayload.items.forEach((item) => {
       event.clipboardData?.setData(item.type, item.content);
     });
     event.preventDefault();
@@ -53,7 +55,7 @@ export default function Home() {
   };
 
   const reset = () => {
-    setCopyPayload([]);
+    setCopyPayload({ items: [] });
   };
 
   return (
