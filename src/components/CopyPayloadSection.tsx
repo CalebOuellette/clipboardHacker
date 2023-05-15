@@ -1,5 +1,5 @@
 import { CopyPayload } from "./CopyPayloadEditor";
-import { formatText } from "../lib/ClipboardTypeUtils";
+import { formatText, FORMATTERS } from "../lib/ClipboardTypeUtils";
 import { Dropdown, DropDownOption } from "./Dropdown";
 import { CLIPBOARD_DATA_TYPES } from "../lib/ClipboardTypeUtils";
 import { DeleteButton, FormatButton } from "./IconButton";
@@ -34,13 +34,13 @@ export function CopyPayloadSection(props: {
         <Dropdown
           options={TypeOptions}
           onOptionSelect={onTypeChange}
-          value={TypeOptions.find((option) =>
-            option.value === props.item.type
-          )!}
+          value={
+            TypeOptions.find((option) => option.value === props.item.type)!
+          }
         />
-        <FormatButton
-          onClick={attemptFormat}
-        />
+        {FORMATTERS[props.item.type] && (
+          <FormatButton onClick={attemptFormat} />
+        )}
         <DeleteButton onClick={props.deleteItem} />
       </div>
       <textarea
@@ -54,8 +54,7 @@ export function CopyPayloadSection(props: {
         rows={25}
         cols={80}
         value={props.content}
-      >
-      </textarea>
+      ></textarea>
     </div>
   );
 }
