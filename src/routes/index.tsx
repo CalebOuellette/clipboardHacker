@@ -1,8 +1,8 @@
 import { createEffect, createMemo, createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
-import CopyPayloadEditor from "~/components/CopyPayloadEditor";
+import CopyPayloadEditor from "../components/CopyPayloadEditor";
 import { CLIPBOARD_DATA_TYPES } from "../lib/ClipboardTypeUtils";
-import { AddSection } from "~/components/AddSection";
+import { AddSection } from "../components/AddSection";
 
 export type CopyPayload = {
   type: string;
@@ -10,9 +10,9 @@ export type CopyPayload = {
 };
 
 export default function Home() {
-  const [copyPayload, setCopyPayload] = createStore<{ items: CopyPayload[] }>(
-    { items: [] },
-  );
+  const [copyPayload, setCopyPayload] = createStore<{ items: CopyPayload[] }>({
+    items: [],
+  });
   const startScreen = createMemo(() => copyPayload.items.length === 0);
 
   const [copying, setCopying] = createSignal<boolean>(false);
@@ -86,18 +86,16 @@ export default function Home() {
           </div>
         )}
       </div>
-      {startScreen()
-        ? (
-          <div class="mt-[30vh] flex gap-1 flex-col items-center font-['Open Sans'] text-center font-bold text-[#ffffff]">
-            <div class="text-xl">Press Cmd + V to get started</div>
-          </div>
-        )
-        : (
-          <CopyPayloadEditor
-            copyPayload={copyPayload}
-            setCopyPayload={setCopyPayload}
-          />
-        )}
+      {startScreen() ? (
+        <div class="mt-[30vh] flex gap-1 flex-col items-center font-['Open Sans'] text-center font-bold text-[#ffffff]">
+          <div class="text-xl">Press Cmd + V to get started</div>
+        </div>
+      ) : (
+        <CopyPayloadEditor
+          copyPayload={copyPayload}
+          setCopyPayload={setCopyPayload}
+        />
+      )}
       <div class="flex justify-center pt-2">
         <div class="w-8/12">
           <AddSection
