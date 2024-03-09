@@ -1,27 +1,27 @@
 import { Component, JSX } from "solid-js";
 
-export const IconButton: Component<{ icon: JSX.Element; onClick: () => void }> =
-  (props) => {
-    return (
-      <div
-        onClick={props.onClick}
-        class="bg-neutral-800 pointer hover:bg-neutral-600 h-8 hover:cursor-pointer flex flex-col justify-center box-border relative items-center  p-2 rounded-lg"
-      >
-        <div class="w-4 min-w">
-          {props.icon}
-        </div>
-      </div>
-    );
-  };
+export const IconButton: Component<{
+  icon: JSX.Element;
+  onClick: () => void;
+}> = (props) => {
+  return (
+    <div
+      onClick={props.onClick}
+      class="bg-neutral-800 pointer hover:bg-neutral-600 h-8 hover:cursor-pointer flex flex-col justify-center box-border relative items-center  p-2 rounded-lg"
+    >
+      <div class="w-4 min-w">{props.icon}</div>
+    </div>
+  );
+};
 export const FormatButton: Component<{ onClick: () => void }> = (props) => (
-  <IconButton onClick={props.onClick} icon={FormatIcon} />
+  <IconButton onClick={props.onClick} icon={<FormatIcon />} />
 );
 
 export const DeleteButton: Component<{ onClick: () => void }> = (props) => (
-  <IconButton onClick={props.onClick} icon={DeleteIcon} />
+  <IconButton onClick={props.onClick} icon={<DeleteIcon />} />
 );
 
-const FormatIcon = () => (
+const FormatIcon: Component = () => (
   <svg
     width="16"
     height="14"
