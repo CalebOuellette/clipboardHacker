@@ -89,6 +89,20 @@ export default function Home() {
       {startScreen() ? (
         <div class="mt-[30vh] flex gap-1 flex-col items-center font-['Open Sans'] text-center font-bold text-[#ffffff]">
           <div class="text-xl">Press Cmd + V to get started</div>
+          <div class="font-normal text-xs pt-3  w-96  text-neutral-300">
+            Custom data can be added to the clipboard using the Clipboard API
+            during a copy event, allowing developers to modify or augment the
+            copied content programmatically. This feature can be used to hide
+            additional data within the copied content that isn't visibly
+            selected by the user. For more details, see Mozilla's Clipboard API
+            documentation:{" "}
+            <a
+              class="underline text-blue-500"
+              href="https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API"
+            >
+              Clipboard API - Web APIs | MDN.{" "}
+            </a>
+          </div>
         </div>
       ) : (
         <CopyPayloadEditor
