@@ -6,7 +6,7 @@ import {
   ListboxOptions,
 } from "solid-headless";
 import { Component, For, JSX } from "solid-js";
-import classNames from "classNames";
+import classNames from "classnames";
 
 const dropDownIcon = () => (
   <svg
