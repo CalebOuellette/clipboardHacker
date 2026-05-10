@@ -87,9 +87,11 @@ export default function Home() {
         )}
       </div>
       {startScreen() ? (
-        <div class="mt-[30vh] flex gap-1 flex-col items-center font-['Open Sans'] text-center font-bold text-[#ffffff]">
-          <div class="text-xl">Press Cmd + V to get started</div>
-          <div class="font-normal text-xs pt-3  w-96  text-neutral-300">
+        <div class="mt-[30vh] flex gap-1 flex-col items-center font-['Open Sans'] text-center text-[#ffffff]">
+          <div class="text-3xl">
+            Press cmd + v to see your current clipboard
+          </div>
+          <div class="font-normal text-base pt-3  w-96  text-neutral-300">
             Custom data can be added to the clipboard using the Clipboard API
             during a copy event, allowing developers to modify or augment the
             copied content programmatically. This feature can be used to hide
