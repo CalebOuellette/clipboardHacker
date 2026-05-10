@@ -3,6 +3,8 @@ Custom data can be added to the clipboard using the Clipboard API during a copy 
 
 Clipboard Hacker is a tool for dealing with this hidden data.
 
+hello world
+
 # Website
 You can use the tool for free at: [https://www.clipboardhacker.com/](https://www.clipboardhacker.com/)
 
